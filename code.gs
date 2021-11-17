@@ -23,14 +23,17 @@ function convert() {
         sl = preso.appendSlide(mylayout); 
         shapes = sl.getShapes();
         shapes[0].getText().appendParagraph(el.asParagraph().getText());
-        Logger.log('=========== HEADER');
+        Logger.log('=== HEADER: %s', el.asParagraph().getText());
         continue;
       } else {// is para but not a heading  
+        txt = el.asParagraph().getText();
+        
         slides = preso.getSlides();
         sl = slides[slides.length-1]
         shapes = sl.getShapes();
         res = el.findElement(DocumentApp.ElementType.INLINE_IMAGE);
         if (res != null){
+          Logger.log('************ INLINE IMAGE');
           shapes[1].replaceWithImage(res.getElement().asInlineImage());
           continue;
         } else {
