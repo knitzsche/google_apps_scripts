@@ -42,35 +42,34 @@ function convert() {
         }
       }
     } else if (thetype == "LIST_ITEM"){
-      var nest = el.asListItem().getNestingLevel();
+            var nest = el.asListItem().getNestingLevel();
       //Logger.log('=========== nest: ' + nest);
       txt = el.asListItem().getText();
-      if (txt == ""){continue} //ignore empty paras 
+      if (txt == ""){continue} //ignore empty paras
       slides = preso.getSlides();
       sl = slides[slides.length-1]
       shapes = sl.getShapes();
       var pre = '';
       var txtrng = shapes[1].getText();
-      if (shapes)
-      switch (nest){
-       case 0:
-        pre = '┷';
-        break;
-       case 1:
-        pre = '➔';
-        break;
-       case 2:
-        pre = '◆';
-      }
+      
       var ftxt = pre + el.getText();
       if (txtrng.getLength() == 0){
         shapes[1].getText().appendParagraph(el.getText());
       } else {
         shapes[1].getText().appendParagraph(el.getText());
-      } 
+      }
       var pars = shapes[1].getText().getParagraphs();
       // don't know why this is not pars.length-1!
       pars[pars.length-2].getRange().getListStyle().applyListPreset(SlidesApp.ListPreset.DISC_CIRCLE_SQUARE);
+
+      switch (nest){
+       case 1:
+        pars[pars.length-2].getRange().getTextStyle().setForegroundColor(255,0,0);
+        pars[pars.length-2].getRange().getParagraphStyle().setIndentStart(50);//works, but glyph is not indented
+        break;
+       case 2:
+        pars[pars.length-2].getRange().getTextStyle().setForegroundColor(0,255,0);
+      }
     }
   }
 }
